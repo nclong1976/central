@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+
+<!-- Mirrored from central2025.com/dang-nhap by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 30 Sep 2025 12:22:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="OgPZ4E66t2vjiftMegrsVSsGg6thi0rHpCSPy2Vp">
+    <meta name="keywords" content="Vinfast">
+    <meta name="description" content="Vinfast">
+    <link rel="stylesheet" href="dashboard/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="dashboard/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="dashboard/css/animate.css" />
+    <link rel="stylesheet" href="dashboard/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="dashboard/css/nice-select.css" />
+    <link rel="stylesheet" href="dashboard/css/datatables.min.css" />
+    <link rel="stylesheet" href="dashboard/css/simple-notify.min.css" />
+    <link rel="stylesheet" type="text/css" href="dashboard/css/notify.css" />
+    <link rel="stylesheet" href="dashboard/css/custom.css" />
+    <link rel="stylesheet" href="dashboard/css/magnific-popup.css" />
+    <link rel="stylesheet" href="dashboard/css/styles67f8.css?var=1" />
+
+    <link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+    <style>
+        .header.sticky-header {
+            padding: 0px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2;
+            background: #ffffff;
+        }
+    </style>
+    <title>Central - Trang chủ</title>
+</head>
+
+<body>
+    <script src="../code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+    <script src="../cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <section class="section-style site-auth grad-overlay"
+        style="background: url('materials/banners/auth-banner.jpg') no-repeat center center; background-size: cover;">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-xl-5 col-lg-8 col-md-12">
+                    <div class="auth-content">
+                        <div class="logo">
+                            <a href="index.html"><img
+                                    src="../www.centralcons.vn/wp-content/uploads/2022/06/Logo-Central.png"
+                                    alt=""></a>
+                        </div>
+                        <div class="title">
+                            <h2>Chào mừng trở lại!</h2>
+                            <p>Đăng nhập tài khoản centralcons của bạn.</p>
+                        </div>
+
+                        <div class="site-auth-form">
+                            <form id="loginForm">
+                                <input type="hidden" name="_token" value="OgPZ4E66t2vjiftMegrsVSsGg6thi0rHpCSPy2Vp">                                <div class="single-field">
+                                    <label class="box-label" for="username">Tên đăng nhập</label>
+                                    <input class="box-input" type="text" name="username" id="username" required autocomplete="off">
+                                </div>
+                                <div class="single-field">
+                                    <label class="box-label" for="password">Mật khẩu</label>
+                                    <div class="password">
+                                        <input class="box-input" type="password" name="password" id="password" required autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="single-field">
+                                    <input class="form-check-input check-input" type="checkbox" name="remember" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Nhớ tôi
+                                    </label>
+                                    <!-- Bỏ link quên mật khẩu vì không cần thiết -->
+                                </div>
+                                <button type="submit" id="buttonDangNhap" class="site-btn-big primary-btn w-100">
+                                    Đăng nhập tài khoản
+                                </button>
+                            </form>
+                            <div class="singnup-text">
+                                <p>
+                                    Chưa có tài khoản?
+                                    <a href="dang-ky.html">Đăng ký miễn phí</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Thiết lập CSRF token cho AJAX
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                let formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    remember: $('#flexCheckDefault').is(':checked') ? 1 : 0
+                };
+
+                console.log('Thông tin đăng nhập:', formData);
+
+                // Kiểm tra các trường bắt buộc
+                if (!formData.username || !formData.password) {
+                    toastr.error("Vui lòng bổ sung thông tin", "");
+                    return;
+                }
+
+                // Gửi AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: '/dang-nhap',
+                    data: formData,
+                    beforeSend: function() {
+                        $('#buttonDangNhap').prop('disabled', true).text('Đang xử lý...');
+                    },
+                    success: function(result) {
+                        console.log('Kết quả:', result);
+                        
+                        if (result.rc == 0) {
+                            toastr.success("Đăng nhập thành công!", "");
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1500);
+                        } else {
+                            toastr.error(result.rd, "Lỗi");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Lỗi AJAX:', xhr.responseText);
+                        toastr.error("Có lỗi xảy ra, vui lòng thử lại", "");
+                    },
+                    complete: function() {
+                        $('#buttonDangNhap').prop('disabled', false).text('Đăng nhập tài khoản');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+
+<!-- Mirrored from central2025.com/dang-nhap by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 30 Sep 2025 12:22:23 GMT -->
+</html>
